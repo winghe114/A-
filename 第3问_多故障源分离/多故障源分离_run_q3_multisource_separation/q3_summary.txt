@@ -1,0 +1,26 @@
+Question 3: multi-source weak periodic signal separation
+Data: data.xlsx, second worksheet
+Method: full-length sinusoidal projection OMP with robust residual thresholding
+
+Automatically selected source count K: 4
+Stop reason: Peak 0.185084 below robust threshold 0.27004 or ratio 13.476 below 20.000
+
+Detected components sorted by frequency:
+  source 1: f = 3.999998184618 Hz, A = 0.0191029144545, phi = 1.37154381959 rad, energy fraction = 0.0161110662119
+  source 2: f = 7.999928733425 Hz, A = 0.0248893739585, phi = -2.98923639499 rad, energy fraction = 0.0273486597892
+  source 3: f = 13.000088596707 Hz, A = 0.0105029404332, phi = -2.15735795582 rad, energy fraction = 0.00487017403049
+  source 4: f = 14.000024160153 Hz, A = 0.0400527378129, phi = 0.111605513868 rad, energy fraction = 0.0708220837119
+
+Overall reconstruction metrics on observed real data:
+  reconstructed energy fraction: 0.119151588464
+  R_squared: 0.119151588464
+  residual RMS: 0.0998798736306
+  RMS reduction: 0.550988245028 dB
+  SNR reconstructed vs residual: -8.68801338999 dB
+
+Threshold settings:
+  robust threshold = median + 18 * MAD_sigma
+  minimum peak-to-median ratio = 20
+  minimum frequency separation = 0.01 Hz
+
+Note: only a single channel is provided in Question 3. Therefore, localization is interpreted as frequency localization of fault sources, not physical spatial localization.

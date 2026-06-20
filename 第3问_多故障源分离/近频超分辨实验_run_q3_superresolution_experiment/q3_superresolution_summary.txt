@@ -1,0 +1,34 @@
+Question 3 super-resolution comparison
+FFT bin spacing 1/T: 0.0025 Hz
+
+Rows: delta_f_Hz, SNR_dB, FFT success, variable-projection success
+df=0.0005 Hz, SNR=-20 dB, FFT=0.000, VarPro=0.000, VarPro mean error=NaN Hz
+df=0.001 Hz, SNR=-20 dB, FFT=0.000, VarPro=0.333, VarPro mean error=0.0002466 Hz
+df=0.0015 Hz, SNR=-20 dB, FFT=0.000, VarPro=0.333, VarPro mean error=0.000279202 Hz
+df=0.002 Hz, SNR=-20 dB, FFT=0.000, VarPro=1.000, VarPro mean error=0.000132876 Hz
+df=0.0025 Hz, SNR=-20 dB, FFT=0.000, VarPro=1.000, VarPro mean error=5.88213e-05 Hz
+df=0.003 Hz, SNR=-20 dB, FFT=0.000, VarPro=1.000, VarPro mean error=0.000100415 Hz
+df=0.005 Hz, SNR=-20 dB, FFT=1.000, VarPro=1.000, VarPro mean error=4.87507e-05 Hz
+df=0.0005 Hz, SNR=-16 dB, FFT=0.000, VarPro=0.000, VarPro mean error=NaN Hz
+df=0.001 Hz, SNR=-16 dB, FFT=0.000, VarPro=0.333, VarPro mean error=8e-05 Hz
+df=0.0015 Hz, SNR=-16 dB, FFT=0.000, VarPro=0.667, VarPro mean error=0.000241512 Hz
+df=0.002 Hz, SNR=-16 dB, FFT=0.000, VarPro=1.000, VarPro mean error=0.000128566 Hz
+df=0.0025 Hz, SNR=-16 dB, FFT=0.000, VarPro=1.000, VarPro mean error=6.29882e-05 Hz
+df=0.003 Hz, SNR=-16 dB, FFT=0.000, VarPro=1.000, VarPro mean error=6.51808e-05 Hz
+df=0.005 Hz, SNR=-16 dB, FFT=1.000, VarPro=1.000, VarPro mean error=4.36521e-05 Hz
+df=0.0005 Hz, SNR=-12 dB, FFT=0.000, VarPro=0.333, VarPro mean error=9.5e-05 Hz
+df=0.001 Hz, SNR=-12 dB, FFT=0.000, VarPro=0.333, VarPro mean error=0.00017 Hz
+df=0.0015 Hz, SNR=-12 dB, FFT=0.000, VarPro=1.000, VarPro mean error=0.000258257 Hz
+df=0.002 Hz, SNR=-12 dB, FFT=0.000, VarPro=1.000, VarPro mean error=4.94271e-05 Hz
+df=0.0025 Hz, SNR=-12 dB, FFT=0.000, VarPro=1.000, VarPro mean error=4.5e-05 Hz
+df=0.003 Hz, SNR=-12 dB, FFT=0.000, VarPro=1.000, VarPro mean error=3.17532e-05 Hz
+df=0.005 Hz, SNR=-12 dB, FFT=1.000, VarPro=1.000, VarPro mean error=2.37662e-05 Hz
+df=0.0005 Hz, SNR=-8 dB, FFT=0.000, VarPro=0.333, VarPro mean error=5.97225e-05 Hz
+df=0.001 Hz, SNR=-8 dB, FFT=0.000, VarPro=1.000, VarPro mean error=0.000142077 Hz
+df=0.0015 Hz, SNR=-8 dB, FFT=0.000, VarPro=1.000, VarPro mean error=7.99274e-05 Hz
+df=0.002 Hz, SNR=-8 dB, FFT=0.000, VarPro=1.000, VarPro mean error=2.50889e-05 Hz
+df=0.0025 Hz, SNR=-8 dB, FFT=0.000, VarPro=1.000, VarPro mean error=2.95869e-05 Hz
+df=0.003 Hz, SNR=-8 dB, FFT=0.000, VarPro=1.000, VarPro mean error=1.24031e-05 Hz
+df=0.005 Hz, SNR=-8 dB, FFT=1.000, VarPro=1.000, VarPro mean error=2.19601e-05 Hz
+
+Interpretation: variable projection assumes a local two-frequency model and jointly optimizes both frequencies. It can resolve sub-bin spacing when SNR is sufficient, whereas direct FFT two-peak picking remains limited by grid spacing and spectral leakage.

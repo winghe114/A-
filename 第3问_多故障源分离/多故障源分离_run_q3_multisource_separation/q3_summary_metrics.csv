@@ -1,0 +1,2 @@
+num_sources,fs_Hz,duration_s,theoretical_resolution_Hz,total_energy,reconstructed_energy,reconstructed_energy_fraction,residual_energy,R_squared,observed_RMS,residual_RMS,RMS_reduction_dB,SNR_reconstructed_vs_residual_dB,threshold_multiplier,min_peak_to_median_ratio,min_separation_Hz
+4,100.000000000091,400,0.0025,453.028622202587,53.9790799551306,0.119151588464077,399.049542247458,0.119151588464075,0.106421014932457,0.0998798736305645,0.550988245027696,-8.68801338998684,18,20,0.01
