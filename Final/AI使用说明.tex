@@ -1,0 +1,98 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{tabularx}
+
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}[AutoFakeBold=2.5]
+\setCJKsansfont{SimHei}
+
+\geometry{
+  a4paper,
+  top=2.54cm,
+  bottom=2.54cm,
+  left=2.70cm,
+  right=2.70cm
+}
+
+\setlength{\parindent}{2em}
+\linespread{1.25}
+\raggedbottom
+
+\title{\heiti AI 工具使用说明}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{所用 AI 工具名称和版本}
+
+\begin{table}[h]
+\centering
+\caption{AI 工具使用情况}
+\begin{tabularx}{\textwidth}{>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{3.6cm}>{\centering\arraybackslash}X>{\centering\arraybackslash}p{4.0cm}}
+\toprule
+工具名称 & 版本/型号 & 开发机构/公司 & 使用日期\\
+\midrule
+DeepSeek & DeepSeek-V2.5-Pro & 深度求索（DeepSeek） & 2026-06-19 至 2026-06-22\\
+MiMo & MiMo & 小米（Xiaomi） & 2026-06-19 至 2026-06-22\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{具体使用目的和环节}
+
+本论文写作过程中，AI 工具主要用于辅助文本组织、语言润色、格式规范和 LaTeX 排版检查。具体使用环节如下：
+
+\begin{enumerate}
+  \item 论文结构整合：辅助梳理问题重述、问题分析、模型假设、符号说明、模型建立与求解、模型评价和参考文献之间的行文顺序。
+  \item 摘要与关键词润色：根据论文实际求解内容，辅助润色摘要表述，使其覆盖四个问题的建模思路、求解结果和模型特点。
+  \item LaTeX 语法整理：辅助检查公式、表格、图片引用、脚注、目录和参考文献格式，使论文排版更加规范。
+  \item 引用与参考文献格式检查：辅助在正文相应位置加入文献引用，并将 AI 工具使用情况补充到参考文献中。
+\end{enumerate}
+
+\section{关键交互记录}
+
+以下记录为关键交互的摘要式摘录，保留重要提示词、回复要点和人工处理情况，不列出完整对话。
+
+\small
+\begin{longtable}{>{\centering\arraybackslash}p{0.8cm}p{3.5cm}p{4.8cm}p{3.6cm}}
+\caption{关键交互记录摘要}\\
+\toprule
+序号 & 重要提示词 & AI 回复要点 & 采纳与人工处理\\
+\midrule
+\endfirsthead
+\toprule
+序号 & 重要提示词 & AI 回复要点 & 采纳与人工处理\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & 将问题一、二、三内容整合进最终论文，保留图表和关键结果。 & 建议按 5.1、5.2、5.3 分节组织，复制图片到统一目录，并保持核心公式和数值结果。 & 采纳章节组织方式，人工核对图片、表格和公式内容。\\
+2 & 前三问模型建立与求解存在重复，进行中等压缩。 & 建议保留主模型、关键公式、图表和数值结果，压缩重复推导和过程性叙述。 & 采纳文字压缩方向，人工确认频率、振幅、初相和残差指标未被改变。\\
+3 & 根据 Word 模板补入第四问和模型评价。 & 建议将问题四按传感器布局检测模型、AHP 参数确定、布局优化和验证分析组织。 & 采纳结构整理，人工检查最优布局、检测概率和敏感性分析表格。\\
+4 & 修改符号说明。 & 将重要符号汇总为三列表格。 & 采纳格式建议，人工确认符号取舍。\\
+\end{longtable}
+\normalsize
+
+\section{采纳和人工修改情况}
+
+AI 工具提供的内容主要作为论文写作和排版的辅助材料。论文中的模型选择、求解流程、数值结果、图表内容和最终结论均由参赛队员人工撰写、绘制。
+
+在采纳AI回答过程中，人工主要进行了以下修改：
+\begin{enumerate}
+  \item 对 AI 给出的语言润色内容进行筛选，删除与题目无关或过度展开的表述。
+  \item 对所有核心公式、频率估计值、振幅、初相、残差指标和检测概率结果进行人工核对。
+  \item 对图表标题、符号说明、模型假设和参考文献格式进行人工调整，使其符合数学建模论文写作习惯。
+  \item 对 LaTeX 编译结果进行检查，确保主论文和本说明文件能够正常生成 PDF。
+\end{enumerate}
+
+综上，AI 工具在本论文中承担辅助润色、结构建议、LaTeX 语法整理和格式检查作用；论文的核心建模思路、结果解释和最终提交内容由人工负责。
+
+\end{document}

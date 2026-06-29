@@ -1,0 +1,54 @@
+{
+  "question": "Q2 single-source waveform recovery",
+  "data": {
+    "samples": 40001,
+    "fs_hz": 100.0,
+    "duration_s": 400.0
+  },
+  "model": {
+    "fitted_linear_form": "x(t)=a sin(2*pi*f0*t)+b cos(2*pi*f0*t)+c+e(t)",
+    "recovered_signal_form": "s_hat(t)=A sin(2*pi*f0*t+phi)",
+    "phase_relation": "A=sqrt(a^2+b^2), phi=atan2(b,a)",
+    "f0_hz": 2.0
+  },
+  "estimated_parameters": {
+    "a_sin": -0.0001672284,
+    "b_cos": 0.0351899101,
+    "offset_c": 4.37905e-05,
+    "amplitude_A": 0.0351903074,
+    "phase_phi_rad": 1.5755484604,
+    "phase_phi_deg": 90.272277
+  },
+  "recovered_signal": {
+    "expression": "s_hat(t)=0.0351903 sin(4*pi*t + 1.57555)",
+    "with_offset_expression": "x_hat(t)=0.0351903 sin(4*pi*t + 1.57555)+4.379e-5"
+  },
+  "observable_error_metrics": {
+    "note": "The noiseless true s(t) samples are not provided; these metrics are residual errors against observed x(t), not direct true-signal errors.",
+    "rmse": 0.100013683,
+    "mae": 0.079703345,
+    "r2": 0.058293952,
+    "estimated_snr_db": -12.082919,
+    "residual_mean": -0.0,
+    "residual_std": 0.100017434
+  },
+  "frequency_domain_evaluation": {
+    "target_frequency_hz": 2.0,
+    "raw_peak_power_at_f0": 130729.204518,
+    "recovered_peak_power_at_f0": 123771.8988,
+    "residual_peak_power_at_f0": 117.682756,
+    "peak_suppression_ratio": 1110.86117,
+    "recovered_energy_concentration_ratio": 0.999999998,
+    "residual_main_peak_hz": 35.829104
+  },
+  "figures": {
+    "time_domain": "C:\\Users\\16320\\Documents\\Codex\\2026-06-19\\files-mentioned-by-the-user-rbfnn\\outputs\\q2_time_domain_comparison_paper_cn.png",
+    "frequency_domain": "C:\\Users\\16320\\Documents\\Codex\\2026-06-19\\files-mentioned-by-the-user-rbfnn\\outputs\\q2_frequency_domain_validation_paper_cn.png",
+    "residual_time_domain": "C:\\Users\\16320\\Documents\\Codex\\2026-06-19\\files-mentioned-by-the-user-rbfnn\\outputs\\q2_residual_signal_paper_cn.png"
+  },
+  "true_error_handling": {
+    "status": "not directly observable from the provided attachment",
+    "reason": "the problem states the form of s(t), but does not provide the true A, phi, or noiseless s(t) sequence",
+    "recommended_paper_statement": "Use least-squares residuals, peak suppression at f0, and recovered-signal energy concentration as observable recovery evidence; use same-SNR simulation if a direct true-signal error metric is required."
+  }
+}

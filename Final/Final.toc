@@ -1,0 +1,69 @@
+\contentsline {section}{\numberline {1}问题重述}{5}{}%
+\contentsline {subsection}{\numberline {1.1}问题背景}{5}{}%
+\contentsline {subsection}{\numberline {1.2}问题提出}{5}{}%
+\contentsline {section}{\numberline {2}问题分析}{5}{}%
+\contentsline {subsection}{\numberline {2.1}问题一的分析}{6}{}%
+\contentsline {subsection}{\numberline {2.2}问题二的分析}{6}{}%
+\contentsline {subsection}{\numberline {2.3}问题三的分析}{7}{}%
+\contentsline {subsection}{\numberline {2.4}问题四的分析}{7}{}%
+\contentsline {section}{\numberline {3}模型假设}{7}{}%
+\contentsline {section}{\numberline {4}符号说明}{8}{}%
+\contentsline {section}{\numberline {5}模型的建立与求解}{9}{}%
+\contentsline {subsection}{\numberline {5.1}问题一模型的建立与求解}{9}{}%
+\contentsline {subsubsection}{\numberline {5.1.1}数据预处理}{9}{}%
+\contentsline {paragraph}{（1）MWS随机共振时域增强}{10}{}%
+\contentsline {paragraph}{（2）一阶自相关时域增强}{12}{}%
+\contentsline {subsubsection}{\numberline {5.1.2}基于全长正弦投影与相关检测的弱周期故障检测模型}{13}{}%
+\contentsline {subsubsection}{\numberline {5.1.3}模型求解过程与频率结果}{14}{}%
+\contentsline {subsubsection}{\numberline {5.1.4}辅助增强方法与模型筛选}{16}{}%
+\contentsline {subsubsection}{\numberline {5.1.5}本节模型小结}{16}{}%
+\contentsline {subsection}{\numberline {5.2}问题二模型的建立与求解}{16}{}%
+\contentsline {subsubsection}{\numberline {5.2.1}数据预处理}{16}{}%
+\contentsline {subsubsection}{\numberline {5.2.2}正弦最小二乘恢复模型的建立}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.3}模型的求解}{17}{}%
+\contentsline {subsubsection}{\numberline {5.2.4}结果分析}{18}{}%
+\contentsline {paragraph}{（1）时域恢复效果}{18}{}%
+\contentsline {paragraph}{（2）频域一致性验证}{18}{}%
+\contentsline {paragraph}{（3）定量评价指标}{19}{}%
+\contentsline {subsubsection}{\numberline {5.2.5}本节小结}{20}{}%
+\contentsline {subsection}{\numberline {5.3}问题三模型的建立与求解}{21}{}%
+\contentsline {subsubsection}{\numberline {5.3.1}多故障源信号数据预处理}{21}{}%
+\contentsline {subsubsection}{\numberline {5.3.2}基于全长正弦投影-OMP与局部变量投影精修的多故障源分离模型}{21}{}%
+\contentsline {paragraph}{（1）多正弦模型的线性化表示}{21}{}%
+\contentsline {paragraph}{（2）基于残差投影的 OMP 频率搜索}{22}{}%
+\contentsline {paragraph}{（3）局部变量投影精修}{22}{}%
+\contentsline {subsubsection}{\numberline {5.3.3}故障源数判定}{23}{}%
+\contentsline {subsubsection}{\numberline {5.3.4}问题求解过程}{24}{}%
+\contentsline {subsubsection}{\numberline {5.3.5}近频辨识极限实验}{28}{}%
+\contentsline {subsubsection}{\numberline {5.3.6}本节小结}{29}{}%
+\contentsline {subsection}{\numberline {5.4}问题四模型的建立与求解}{29}{}%
+\contentsline {subsubsection}{\numberline {5.4.1}模型建立}{29}{}%
+\contentsline {paragraph}{（1）传感器布局检测模型}{30}{}%
+\contentsline {paragraph}{（2）检测统计量与误报率约束}{30}{}%
+\contentsline {paragraph}{（3）归一化齿轮箱模型}{31}{}%
+\contentsline {paragraph}{（4）参数确定}{32}{}%
+\contentsline {subsubsection}{\numberline {5.4.2}模型优化}{35}{}%
+\contentsline {subsubsection}{\numberline {5.4.3}模型计算与结果分析}{35}{}%
+\contentsline {paragraph}{（1）仿真设置}{35}{}%
+\contentsline {paragraph}{（2）基准条件下的最优布局}{35}{}%
+\contentsline {subsubsection}{\numberline {5.4.4}模型验证与性能分析}{36}{}%
+\contentsline {paragraph}{（1）不同信噪比下的性能增益}{36}{}%
+\contentsline {paragraph}{（2）目标权重 \(\omega \) 的敏感性分析}{36}{}%
+\contentsline {paragraph}{（3）传播参数敏感性分析}{37}{}%
+\contentsline {paragraph}{（4）AHP 参数扰动分析}{37}{}%
+\contentsline {paragraph}{（5）候选测点数量变化验证}{37}{}%
+\contentsline {paragraph}{（6）随机故障源位置鲁棒性}{38}{}%
+\contentsline {paragraph}{（7）传感器失效可靠性分析}{38}{}%
+\contentsline {subsubsection}{\numberline {5.4.5}本问小结}{38}{}%
+\contentsline {section}{\numberline {6}模型优缺点评价}{38}{}%
+\contentsline {subsection}{\numberline {6.1}模型的优点}{39}{}%
+\contentsline {subsection}{\numberline {6.2}模型的缺点}{39}{}%
+\contentsline {subsection}{\numberline {6.3}模型的改进}{39}{}%
+\contentsline {section}{\numberline {7}参考文献}{40}{}%
+\contentsline {section}{\numberline {A}核心程序代码}{41}{}%
+\contentsline {subsection}{\numberline {A.1}问题一：MWS 随机共振核心代码}{41}{}%
+\contentsline {subsection}{\numberline {A.2}问题一：一阶自相关增强核心代码}{43}{}%
+\contentsline {subsection}{\numberline {A.3}问题一：全长正弦投影测频核心代码}{44}{}%
+\contentsline {subsection}{\numberline {A.4}问题二：单源波形恢复核心代码}{45}{}%
+\contentsline {subsection}{\numberline {A.5}问题三：投影 OMP 多源分离核心代码}{46}{}%
+\contentsline {subsection}{\numberline {A.6}问题四：三传感器布局优化核心代码}{47}{}%

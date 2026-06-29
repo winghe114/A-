@@ -1,0 +1,5 @@
+Case,RemainingSensors,MeanPd,MinPd
+No failure,"P1,P4,P5",0.595333333333333,0.554
+Sensor P1 failed,"P4,P5",0.442666666666667,0.328
+Sensor P4 failed,"P1,P5",0.428,0.392
+Sensor P5 failed,"P1,P4",0.45,0.358

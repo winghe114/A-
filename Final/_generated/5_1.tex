@@ -1,0 +1,442 @@
+\subsection{问题一模型的建立与求解}
+
+
+\subsubsection{数据预处理}
+
+
+题目给出的单源故障信号可以看作由微弱周期故障分量、随机噪声以及可能存在的直流偏置共同组成。设原始观测数据为
+
+
+\[
+x_i=x(t_i),\quad i=1,2,\cdots,N,
+\]
+
+
+其中 \(t_i\) 为采样时刻，由于直流分量不携带故障周期信息，首先对原始信号进行去均值处理：
+
+
+\[
+y_i=x_i-\bar{x},\qquad 
+\bar{x}=\frac{1}{N}\sum_{i=1}^{N}x_i.
+\]
+
+
+去均值后的信号 \(y_i\) 作为主模型的基本输入。由于第二问需要恢复故障分量的幅值 \(A\)，因此主模型保留去均值信号的原始幅值尺度，不再对 \(y_i\) 作幅值归一化。
+
+
+但是随机共振和一阶自相关增强属于辅助预处理分支，其目的不是恢复真实幅值，而是增强弱周期分量的可检测性。为避免输入尺度影响非线性系统响应和相关函数幅值，本文对增强分支采用标准化输入：
+
+
+\[
+\sigma_y=\sqrt{\frac{1}{N-1}\sum_{i=1}^{N}y_i^2},
+\qquad
+u_i=\frac{y_i}{\sigma_y}.
+\]
+
+
+其中 \(u_i\) 为去均值并标准化后的信号。后续全长正弦投影主模型使用 \(y_i\)，随机共振和一阶自相关增强分支使用 \(u_i\)。
+
+
+\paragraph{（1）MWS随机共振增强分支}
+
+
+随机共振用于辅助观察强噪声中的弱周期分量。本文采用 MWS（multi-stable well-shaped）随机共振，通过可调势函数控制势阱形状和系统回复力，作为全长投影主模型之外的增强验证分支。
+
+
+设去均值并标准化后的输入信号为 \(u(t)\)，MWS 势函数取为
+
+
+\[
+U(x)=-a+\frac{b x^2}{2}+
+\frac{V_0}{1+\exp\{(|x|-R)/C\}},
+\]
+
+
+其中 \(x(t)\) 为非线性系统状态，\(b\) 控制远离原点时的二次约束强度，\(V_0\) 控制中部势垒幅值，\(R\) 控制势阱宽度，\(C\) 控制势函数边缘过渡的平滑程度。由
+
+
+\[
+\frac{\mathrm{d}x}{\mathrm{d}t}
+=-\frac{\mathrm{d}U(x)}{\mathrm{d}x}+k u(t)
+\]
+
+
+可得本文采用的 MWS 随机共振动力系统：
+
+
+\[
+\frac{\mathrm{d}x}{\mathrm{d}t}
+=-b x-\frac{V_0}{C}\operatorname{sgn}(x)
+\frac{q}{(1+q)^2}+k u(t),
+\qquad
+q=\exp\{(|x|-R)/C\}.
+\]
+
+
+其中 \(k\) 为输入增益。参数 \((b,V\_0,R,C)\) 用于调节势阱形状，使输出在目标频率附近形成更稳定的周期响应。
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/MWS随机共振_run_mws_stochastic_resonance/fig_mws_potential.png}
+\caption{MWS随机共振势函数示意图}
+\end{figure}
+
+
+本文将 MWS 随机共振作为辅助预处理分支，不直接承担最终频率估计任务。计算时先对标准化输入 \(u(t)\) 进行适度降采样和平滑，再用四阶 Runge--Kutta 方法求解系统，并在下列参数网格中搜索较优输出：
+
+
+\[
+\begin{aligned}
+b&\in\{0.8,1.2,1.8,2.5,3.5,5.5\},\\
+V_0&\in\{0.8,1.5,2.5,4.0,8.0,16.0,24.0\},\\
+R&\in\{0.25,0.50,0.80,1.20,1.60\},\\
+C&\in\{0.12,0.20,0.35,0.60,0.90\},\\
+k&\in\{0.04,0.08,0.14,0.22,0.32,0.48,0.70\}.
+\end{aligned}
+\]
+
+
+对每一组候选参数，本文计算 MWS 输出在主模型频率 \(2\ \mathrm{Hz}\) 附近的正弦投影能量占比和局部信噪比，并对排名靠前的结果进一步进行局部投影频率精修。综合指标最优的参数为
+
+
+\[
+a=1,\quad b=5.5,\quad V_0=8,\quad R=0.25,\quad C=0.20,\quad k=0.32.
+\]
+
+
+在该参数下，MWS 输出的局部信噪比为 \(28.937736\ \mathrm{dB}\)，输出序列的精细投影频率估计为
+
+
+\[
+f_{\mathrm{MWS}}=1.999954613486\ \mathrm{Hz},
+\]
+
+
+与全长正弦投影主模型频率 \(2.000001615205\ \mathrm{Hz}\) 的差值约为 \(4.70\times10^{-5}\ \mathrm{Hz}\)。下图给出了处理前后的短时时域波形及频谱对比，MWS 输出在 2 Hz 附近形成了可辨识响应。
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/MWS随机共振_run_mws_stochastic_resonance/fig_mws_time_spectrum_comparison.png}
+\caption{MWS随机共振处理前后时域与频谱对比}
+\end{figure}
+
+
+将 MWS 估计频率回代到原始去均值信号中计算投影能量占比约为 \(0.05823\)，仍不优于全长正弦投影主模型。因此，MWS 随机共振仅作为增强显示和辅助验证，最终估计以后文全长投影结果为准。
+
+
+
+
+\paragraph{（2）一阶自相关增强分支}
+
+
+自相关函数用于刻画信号与其延迟版本之间的相似程度。周期分量在整数倍周期滞后处仍保持较强相关性，而随机噪声在非零滞后处相关性较弱，因此自相关可作为第二个辅助验证分支。
+
+
+本文对标准化信号 \(u_i\) 计算一阶自相关函数：
+
+
+\[
+R_u(k)=\frac{1}{N-k}\sum_{i=1}^{N-k}u_i u_{i+k},
+\qquad k=0,1,\cdots,N-1.
+\]
+
+
+若原信号中存在周期分量 \(A\sin(2\pi f\_0 t+\varphi)\)，则其自相关函数仍保留相同周期。本题约 2 Hz 的故障频率对应周期
+
+
+\[
+T_0=\frac{1}{f_0}\approx0.5\ \mathrm{s}.
+\]
+
+
+若自相关序列在滞后轴上呈现约 0.5 s 的重复结构，即可作为故障周期存在的辅助证据。
+
+
+实际计算中，为避免零滞后 \(R\_u(0)\) 的大峰值影响观察，去掉零滞后项，并对正滞后自相关序列进行去趋势和标准化：
+
+
+\[
+\tilde{R}_u(k)=
+\frac{R_u(k)-\overline{R_u}}{\sigma_R}.
+\]
+
+
+随后对 \(\tilde{R}\_u(k)\) 进行与原信号相同的正弦投影检测。下图给出了处理前后的短时时域波形和幅频谱对比，自相关增强后 0.5 s 周期结构更清楚，2 Hz 附近峰值也更加集中。
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/预处理增强_run_preprocessing_enhancement_figures/fig_acf_time_spectrum_comparison.png}
+\caption{一阶自相关处理前后时域与频谱对比}
+\end{figure}
+
+
+一阶自相关增强后的估计频率为 \(2.000005328728\ \mathrm{Hz}\)，与全长正弦投影结果仅相差 \(3.71\times10^{-6}\ \mathrm{Hz}\)。但其回代到原始信号后的投影能量占比略低于主模型，因此主要用于周期可视化和辅助验证。
+
+\subsubsection{基于全长正弦投影与相关检测的弱周期故障检测模型}
+
+
+题目要求从强噪声背景中检测单源故障主频，故将问题一抽象为含噪正弦信号的频率估计问题。对去均值后的观测信号建立模型：
+
+
+\[
+y(t_i)=A\sin(2\pi f t_i+\varphi)+\varepsilon_i,
+\qquad i=1,2,\cdots,N,
+\]
+
+
+其中 \(A\)、\(f\)、\(\varphi\) 分别为故障分量的幅值、频率和初相位，\(\varepsilon_i\) 为噪声及未建模扰动。本文选择全长正弦投影作为主模型，即利用整个观测区间评价观测信号能否被候选频率 \(f\) 下的正弦、余弦基函数充分解释。
+
+
+由于正弦函数可展开为
+
+
+\[
+A\sin(2\pi f t+\varphi)
+=a\cos(2\pi f t)+b\sin(2\pi f t),
+\]
+
+
+其中
+
+
+\[
+a=A\sin\varphi,\qquad b=A\cos\varphi,
+\]
+
+
+于是对于任意给定频率 \(f\)，模型可以写成线性回归形式：
+
+
+\[
+\mathbf{y}=\mathbf{H}(f)\boldsymbol{\theta}+\boldsymbol{\varepsilon},
+\]
+
+
+其中
+
+
+\[
+\mathbf{y}=
+\begin{bmatrix}
+y_1\\y_2\\\vdots\\y_N
+\end{bmatrix},
+\quad
+\boldsymbol{\theta}=
+\begin{bmatrix}
+a\\b
+\end{bmatrix},
+\quad
+\mathbf{H}(f)=
+\begin{bmatrix}
+\cos(2\pi f t_1) & \sin(2\pi f t_1)\\
+\cos(2\pi f t_2) & \sin(2\pi f t_2)\\
+\vdots & \vdots\\
+\cos(2\pi f t_N) & \sin(2\pi f t_N)
+\end{bmatrix}.
+\]
+
+
+在给定 \(f\) 时，参数 \(\boldsymbol{\theta}\) 的最小二乘估计为
+
+
+\[
+\hat{\boldsymbol{\theta}}(f)
+=
+\left[\mathbf{H}^{T}(f)\mathbf{H}(f)\right]^{-1}
+\mathbf{H}^{T}(f)\mathbf{y}.
+\]
+
+
+对应的拟合周期分量为
+
+
+\[
+\hat{\mathbf{s}}(f)=\mathbf{H}(f)\hat{\boldsymbol{\theta}}(f).
+\]
+
+
+若某一频率 \(f\) 处存在周期故障信号，则原信号在对应二维正弦子空间上的投影能量会明显增大。因此定义全长正弦投影能量函数：
+
+
+\[
+J(f)=\|\hat{\mathbf{s}}(f)\|_2^2
+=
+\mathbf{y}^{T}\mathbf{H}(f)
+\left[\mathbf{H}^{T}(f)\mathbf{H}(f)\right]^{-1}
+\mathbf{H}^{T}(f)\mathbf{y}.
+\]
+
+
+最终频率估计问题转化为一维优化问题：
+
+
+\[
+\hat{f}_0=\arg\max_{f\in[f_{\min},f_{\max}]}J(f).
+\]
+
+
+该统计量同时具有最小二乘、相关检测和假设检验三种解释：给定 \(f\) 后，最小二乘估计是在正弦子空间中寻找离 \(\mathbf y\) 最近的拟合分量；两路正弦/余弦参考信号可以消除未知初相的影响；在高斯噪声假设下，比较不同频率处的投影能量与广义似然比检验的判决形式一致。
+
+
+设
+
+
+\[
+H_0:\mathbf{y}=\boldsymbol{\varepsilon},
+\]
+
+
+\[
+H_1:\mathbf{y}=\mathbf{H}(f)\boldsymbol{\theta}+\boldsymbol{\varepsilon}.
+\]
+
+
+其中 \(H_0\) 表示不存在周期故障分量，\(H_1\) 表示存在频率为 \(f\) 的周期故障分量。在 \(H_1\) 下，未知参数 \(\boldsymbol{\theta}\) 由最小二乘估计给出，因此比较 \(J(f)\) 即可比较该频率下周期分量存在的可能性。
+
+
+进一步地，\(J(f)\) 本质上是信号与两个正交参考基 \(\cos(2\pi ft)\)、\(\sin(2\pi ft)\) 的全长相干相关能量。若忽略归一化系数，可理解为
+
+
+\[
+J(f)\sim
+\left|\langle \mathbf{y},\cos(2\pi f\mathbf{t})\rangle\right|^2
++
+\left|\langle \mathbf{y},\sin(2\pi f\mathbf{t})\rangle\right|^2.
+\]
+
+
+因此，本文以 \(J(f)\) 作为频率搜索目标函数，用全长相干积累提高强噪声下的弱周期检测稳定性。
+
+
+
+
+\subsubsection{模型求解过程与频率结果}
+
+
+根据上述模型，问题一的主频求解过程如下。
+
+
+第一步，读取单源故障数据，得到观测序列 \(x_i\) 和采样时刻 \(t_i\)。由数据可知采样间隔为
+
+
+\[
+\Delta t=0.01\ \mathrm{s},
+\]
+
+
+因此采样频率为
+
+
+\[
+f_s=100\ \mathrm{Hz}.
+\]
+
+
+第二步，对原始信号进行去均值处理：
+
+
+\[
+y_i=x_i-\bar{x}.
+\]
+
+
+主模型直接使用 \(y_i\) 进行投影搜索，以保留原始幅值尺度；随机共振和一阶自相关增强分支再使用标准化信号
+
+
+\[
+u_i=\frac{y_i}{\sigma_y}.
+\]
+
+
+第三步，使用全长 FFT 对主频进行粗定位。普通 FFT 的最大频点为
+
+
+\[
+f_{\mathrm{FFT}}=1.999950001252\ \mathrm{Hz}.
+\]
+
+
+该结果说明故障主频位于 2 Hz 附近，但 FFT 频率只能落在离散频率栅格上，不能直接作为最终精确频率。
+
+
+第四步，在粗定位频率附近建立频率搜索区间，例如
+
+
+\[
+f\in[1.959950001252,\ 2.039950001252]\ \mathrm{Hz}.
+\]
+
+
+对区间内每一个候选频率 \(f\)，建立矩阵 \(\mathbf{H}(f)\)，计算 \(\hat{\boldsymbol{\theta}}(f)\)、\(\hat{\mathbf{s}}(f)\) 和投影能量 \(J(f)\)。先通过密集网格搜索确定峰值附近位置，再用一维优化算法对峰值位置进行精化。
+
+
+下图展示了连续频率搜索得到的全长正弦投影能量曲线。可以看到，\(J(f)\) 在目标频率附近形成尖锐峰值，这说明观测信号在该频率对应的正弦子空间上具有最大的相干投影能量。
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/全长投影模型_run_full_length_projection_model/fig_projection_energy_curve.png}
+\caption{全长正弦投影能量曲线}
+\end{figure}
+
+
+第五步，最大化投影能量函数，得到全长正弦投影模型的频率估计：
+
+
+\[
+\hat f_0=2.000001615205\ \mathrm{Hz}.
+\]
+
+
+对应的投影能量为
+
+
+\[
+J(\hat f_0)=24.768425883189,
+\]
+
+
+残差能量为
+
+
+\[
+\|\mathbf{y}-\hat{\mathbf{s}}(\hat f_0)\|_2^2=400.119442268241.
+\]
+
+
+
+下图给出了普通 FFT 粗定位结果与全长正弦投影精估结果的对比。可以看出，FFT 只能给出离散频点 \(1.999950001252\ \mathrm{Hz}\)，而全长投影模型进一步在连续频率上确定峰值位置。
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.86\textwidth]{figures/全长投影模型_run_full_length_projection_model/fig_fft_vs_projection.png}
+\caption{FFT 粗定位与全长正弦投影精估对比}
+\end{figure}
+
+
+与传统傅里叶变换相比，全长正弦投影模型有三点优势：一是频率在连续变量 \(f\) 上优化，避免仅落在 FFT 离散频率栅格上；二是模型具有明确的参数化观测形式，可同时给出投影能量、残差能量和检测统计量；三是利用全观测区间进行相干积累，真实周期分量在正确频率处增强，而随机噪声难以长期同相累积。
+
+
+
+因此，本文将全长正弦投影与相关检测作为问题一的主模型，最终检测到的单源故障频率为
+
+
+\[
+\boxed{\hat f_0=2.000001615205\ \mathrm{Hz}}.
+\]
+
+
+\subsubsection{辅助增强方法与模型筛选}
+
+
+为验证主频检测结果的稳定性，本文还比较了一阶自相关增强和随机共振。自相关增强后得到频率 \(2.000005328728\ \mathrm{Hz}\)，与主模型相差约 \(3.71\times10^{-6}\ \mathrm{Hz}\)，自相关域正弦投影能量占比为 \(0.9512\)，可作为主频存在性的辅助验证。随机共振输出局部信噪比约为 28.922 dB，频率估计为 \(1.999953369807\ \mathrm{Hz}\)；扩大 \(k\in[0.005,1.50]\) 的敏感性分析后仍稳定在 \(1.999953\ \mathrm{Hz}\) 附近，说明其更适合增强显示而非最终精确测频。综合原始信号上的投影解释能力，最终采用全长正弦投影结果。
+
+
+\subsubsection{本节模型小结}
+
+
+本节将弱故障检测问题抽象为含噪正弦信号的频率估计问题，建立了基于全长正弦投影的检测模型。该模型以正弦子空间投影能量作为目标函数，通过一维频率搜索得到 \(\hat f_0=2.000001615205\ \mathrm{Hz}\)。相比普通 FFT，该模型避免了频率栅格限制；相比随机共振和自相关增强，该模型在原始信号上的解释能力更强，因此作为问题一的核心模型。
